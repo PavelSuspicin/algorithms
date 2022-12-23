@@ -6,7 +6,6 @@ class MyArray {
     ) {
       throw new Error('Длина массива должна быть целым числом')
     }
-
     if (!(initialSize > 0)) {
       throw new Error('Размер массива должен быть больше нуля')
     }
@@ -45,12 +44,14 @@ class MyArray {
     // Если index не определён — добавляет в конец массива.
     if (index === undefined) {
       this.memory[this.length] = value
-
       this.length = this.length + 1
     }
     // Добавляет новый элемент в массив.
     else {
       this.memory[index] = value
+      this.length = this.length + 1
+    }
+    if (this.length === this.size) {
     }
 
     return this.memory
@@ -71,11 +72,11 @@ function allocate(size) {
   }
   return memory
 }
-const myArr = new MyArray(6)
-console.log(myArr.add(0))
-console.log(myArr.add(1))
+const myArr = new MyArray(5)
+console.log(myArr.add(3, 1))
+console.log(myArr.add(4, 2))
 console.log(myArr.add(2))
 console.log(myArr.add(3))
 console.log(myArr.add(4))
 console.log(myArr)
-console.log(myArr.length)
+console.log(myArr.size)
