@@ -10,25 +10,28 @@ class MyArray {
     if (!(initialSize > 0)) {
       throw new Error('Размер массива должен быть больше нуля')
     }
-
     this.size = initialSize
     this.memory = allocate(initialSize)
     this.length = 0
   }
 
-  // Возвращает значение по индексу.
-  // Если индекс за пределами — кидает ошибку.
-  get(index) {
+  checkIndex(index) {
     if (index > this.size - 1) {
       throw new Error('Индекс за пределами вызова')
     }
+  }
+
+  // Возвращает значение по индексу.
+  // Если индекс за пределами — кидает ошибку.
+  get(index) {
+    this.checkIndex(index)
     return this.memory[index]
   }
 
   // Устанавливает значение по индексу.
   // Если индекс за пределами — кидает ошибку.
   set(index, value) {
-    if (index > this.size - 1) throw new Error('Индекс за пределами вызова')
+    this.checkIndex(index)
     return (this.memory[index] = value)
   }
 
@@ -37,13 +40,19 @@ class MyArray {
   // Увеличивает выделенную память вдвое, если необходимо.
   // Возвращает новую длину массива.
   add(value, index) {
-    this.length = index + 1
     // Если индекс за пределами - кидает ошибку.
-    if (index > this.size - 1) throw new Error('Индекс за пределами')
+    this.checkIndex(index)
     // Если index не определён — добавляет в конец массива.
-    if (index === undefined) this.memory[this.size - 1] = value
+    if (index === undefined) {
+      this.memory[this.length] = value
+
+      this.length = this.length + 1
+    }
     // Добавляет новый элемент в массив.
-    else this.memory[index] = value
+    else {
+      this.memory[index] = value
+    }
+
     return this.memory
   }
 
@@ -62,7 +71,11 @@ function allocate(size) {
   }
   return memory
 }
-const myArr = new MyArray(2)
+const myArr = new MyArray(6)
+console.log(myArr.add(0))
+console.log(myArr.add(1))
+console.log(myArr.add(2))
+console.log(myArr.add(3))
+console.log(myArr.add(4))
 console.log(myArr)
-console.log(myArr.add(1, 0))
 console.log(myArr.length)
