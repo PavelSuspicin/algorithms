@@ -1,9 +1,6 @@
 class MyArray {
   constructor(initialSize = 1) {
-    if (
-      Number(initialSize) !== initialSize ||
-      Math.round(initialSize) !== initialSize
-    ) {
+    if (Number(initialSize) !== initialSize || Math.round(initialSize) !== initialSize) {
       throw new Error('Длина массива должна быть целым числом')
     }
     if (!(initialSize > 0)) {
@@ -14,8 +11,16 @@ class MyArray {
     this.length = 0
   }
 
+  checkLengthArr() {
+    if (this.length === this.size) {
+      this.size *= 2
+    }
+    return this.size
+  }
+
   checkIndex(index) {
-    if (index > this.size - 1) {
+    console.log(this.length)
+    if (this.length - 1 < index) {
       throw new Error('Индекс за пределами вызова')
     }
   }
@@ -34,26 +39,28 @@ class MyArray {
     return (this.memory[index] = value)
   }
 
-  // В противном случае — добавляет по индексу со сдвигом
-  // всех последующих элементов.
   // Увеличивает выделенную память вдвое, если необходимо.
   // Возвращает новую длину массива.
+
   add(value, index) {
     // Если индекс за пределами - кидает ошибку.
     this.checkIndex(index)
+    // Добавляет новый элемент в массив.
     // Если index не определён — добавляет в конец массива.
     if (index === undefined) {
       this.memory[this.length] = value
-      this.length = this.length + 1
+      this.length += 1
+      // this.checkLengthArr()
     }
-    // Добавляет новый элемент в массив.
+    // В противном случае — добавляет по индексу со сдвигом всех последующих элементов.
     else {
-      this.memory[index] = value
-      this.length = this.length + 1
+      for (let i = 0; i < this.length; i++) {
+        console.log(i)
+        console.log((this.memory[index] = value))
+      }
     }
-    if (this.length === this.size) {
-    }
-
+    // this.length += 1
+    this.checkLengthArr()
     return this.memory
   }
 
@@ -72,11 +79,13 @@ function allocate(size) {
   }
   return memory
 }
-const myArr = new MyArray(5)
-console.log(myArr.add(3, 1))
-console.log(myArr.add(4, 2))
+const myArr = new MyArray(1)
+console.log(myArr.add(0))
+console.log(myArr.add(1))
 console.log(myArr.add(2))
 console.log(myArr.add(3))
-console.log(myArr.add(4))
-console.log(myArr)
+console.log(myArr.add(4, 3))
+console.log(myArr.length)
 console.log(myArr.size)
+console.log(myArr.length)
+console.log(myArr.memory)
