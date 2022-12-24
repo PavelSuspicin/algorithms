@@ -11,7 +11,7 @@ class MyArray {
     this.length = 0
   }
 
-  checkLengthArr() {
+  checkSizeArr() {
     if (this.length === this.size) {
       this.size *= 2
     }
@@ -20,7 +20,7 @@ class MyArray {
 
   checkIndex(index) {
     console.log(this.length)
-    if (this.length - 1 < index) {
+    if (this.length - 1 < index && index >= 0) {
       throw new Error('Индекс за пределами вызова')
     }
   }
@@ -36,7 +36,7 @@ class MyArray {
   // Если индекс за пределами — кидает ошибку.
   set(index, value) {
     this.checkIndex(index)
-    return (this.memory[index] = value)
+    return console.log((this.memory[index] = value))
   }
 
   // Увеличивает выделенную память вдвое, если необходимо.
@@ -56,11 +56,15 @@ class MyArray {
     else {
       for (let i = 0; i < this.length; i++) {
         console.log(i)
-        console.log((this.memory[index] = value))
+        console.log((this.memory[i] = this.memory[i + 1]))
+
+        // console.log(this.memory[i]=this.memory[i+1])
       }
+      console.log((this.memory[index] = value))
     }
     // this.length += 1
-    this.checkLengthArr()
+    console.log(this.memory)
+    this.checkSizeArr()
     return this.memory
   }
 
@@ -79,13 +83,11 @@ function allocate(size) {
   }
   return memory
 }
-const myArr = new MyArray(1)
+const myArr = new MyArray()
 console.log(myArr.add(0))
 console.log(myArr.add(1))
-console.log(myArr.add(2))
 console.log(myArr.add(3))
-console.log(myArr.add(4, 3))
+console.log(myArr.add(2, 2))
 console.log(myArr.length)
 console.log(myArr.size)
-console.log(myArr.length)
 console.log(myArr.memory)
