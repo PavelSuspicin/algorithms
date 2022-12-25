@@ -12,14 +12,19 @@ class MyArray {
   }
 
   checkSizeArr() {
+    let clone = {}
     if (this.length === this.size) {
       this.size *= 2
+      for (let key in user) {
+        clone[key] = user[key]
+      }
     }
+    console.log(this.memory)
     return (this.memory = allocate(this.size))
   }
 
   checkIndex(index) {
-    if (this.length < index) {
+    if (this.length - 1 < index || this.length === 0) {
       throw new Error('Индекс за пределами вызова')
     }
   }
@@ -43,13 +48,13 @@ class MyArray {
   // Возвращает новую длину массива.
   add(value, index) {
     // Если индекс за пределами - кидает ошибку.
-    this.checkIndex()
     this.length++
-    this.checkSizeArr()
+    this.checkIndex()
+    // this.checkSizeArr()
     // Добавляет новый элемент в массив.
     // Если index не определён — добавляет в конец массива.
     if (index === undefined) {
-      console.log(this.length)
+      return (this.memory[this.length - 1] = value)
     }
   }
 
@@ -67,11 +72,12 @@ function allocate(size) {
   return memory
 }
 
-const arr = new MyArray(3)
+const arr = new MyArray()
 console.log(arr)
-console.log(arr.get(0))
 console.log(arr.add(1))
 console.log(arr.add(1))
+console.log(arr.add(1))
+console.log(arr.set(1, 10))
+console.log(arr)
 console.log(arr.set(2, 10))
-console.log(arr.add(1, 3))
 console.log(arr)
