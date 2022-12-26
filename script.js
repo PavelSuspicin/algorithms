@@ -1,6 +1,9 @@
 class MyArray {
   constructor(initialSize = 1) {
-    if (Number(initialSize) !== initialSize || Math.round(initialSize) !== initialSize) {
+    if (
+      Number(initialSize) !== initialSize ||
+      Math.round(initialSize) !== initialSize
+    ) {
       throw new Error('Длина массива должна быть целым числом')
     }
     if (!(initialSize > 0)) {
@@ -11,22 +14,8 @@ class MyArray {
     this.length = 0
   }
 
-  checkSizeArr() {
-    let clone = {}
-    if (this.length === this.size) {
-      this.size *= 2
-      for (let key in this.memory) {
-        clone[key] = this.memory[key]
-        console.log(clone[key])
-      }
-      console.log(clone)
-    }
-    // console.log(this.memory)
-    // return (this.memory = allocate(this.size))
-  }
-
   checkIndex(index) {
-    if (this.length - 1 < index) {
+    if (index >= this.length || index < 0) {
       throw new Error('Индекс за пределами вызова')
     }
   }
@@ -52,11 +41,11 @@ class MyArray {
     // Если индекс за пределами - кидает ошибку.
     this.checkIndex()
     this.length++
-    this.checkSizeArr()
+
     // Добавляет новый элемент в массив.
     // Если index не определён — добавляет в конец массива.
     if (index === undefined) {
-      return (this.memory[this.length - 1] = value)
+      return (this.memory[this.length] = value)
     } else {
       for (let i = 0; i < this.length - 1; i++) {}
     }
@@ -78,7 +67,9 @@ function allocate(size) {
 
 const arr = new MyArray()
 console.log(arr)
-console.log(arr.add(10))
-console.log(arr.add(11))
-console.log(arr.add(12))
+console.log(arr.add('one'))
+console.log(arr.add('two'))
+console.log(arr)
+console.log(arr.get())
+console.log(arr.add('three', 0))
 console.log(arr)
